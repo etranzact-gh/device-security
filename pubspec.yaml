@@ -1,4 +1,4 @@
-name: device_security
+name: device_security_plus
 description: A Flutter plugin to retrieve unique device identifiers and monitor real-time security statuses (VPN, Debug Mode, USB Connection) across iOS and Android.
 version: 1.0.1
 homepage: https://github.com/etranzact-gh/device-security
