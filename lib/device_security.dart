@@ -1,7 +1,7 @@
 import 'package:device_security_plus/device_security_snapshot.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 
-import 'device_security_platform_interface.dart';
+import 'src/device_security_platform_interface.dart';
 
 /// A plugin for accessing device security information and status.
 ///
