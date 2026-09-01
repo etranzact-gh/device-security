@@ -29,7 +29,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.etranzact.gh.device_security
+        package: com.etranzact.gh.device_security_plus
         pluginClass: DeviceSecurityPlugin
       ios:
         pluginClass: DeviceSecurityPlugin

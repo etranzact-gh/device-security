@@ -1,6 +1,6 @@
+import 'package:device_security_plus/device_security.dart';
 import 'package:flutter/material.dart';
-import 'package:device_security/device_security.dart';
-import 'package:device_security/device_security_snapshot.dart';
+import 'package:device_security_plus/device_security_snapshot.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    
+
     // 1. Initialize live streams
     _usbStream = _deviceSecurityPlugin.getUsbConnectedStatus();
     _debugStream = _deviceSecurityPlugin.getDebugModeStatus();
@@ -114,10 +114,26 @@ class _MyAppState extends State<MyApp> {
                 child: Center(child: CircularProgressIndicator()),
               )
             else if (_snapshot != null) ...[
-              _buildStatusRow('Device ID', _snapshot!.deviceId ?? 'Unknown', Icons.perm_device_information),
-              _buildStatusRow('USB Connected', _snapshot!.isUsbConnected.toString(), Icons.usb),
-              _buildStatusRow('Debug Mode', _snapshot!.isDebugMode.toString(), Icons.bug_report),
-              _buildStatusRow('VPN Connected', _snapshot!.isVpnConnected.toString(), Icons.vpn_lock),
+              _buildStatusRow(
+                'Device ID',
+                _snapshot!.deviceId ?? 'Unknown',
+                Icons.perm_device_information,
+              ),
+              _buildStatusRow(
+                'USB Connected',
+                _snapshot!.isUsbConnected.toString(),
+                Icons.usb,
+              ),
+              _buildStatusRow(
+                'Debug Mode',
+                _snapshot!.isDebugMode.toString(),
+                Icons.bug_report,
+              ),
+              _buildStatusRow(
+                'VPN Connected',
+                _snapshot!.isVpnConnected.toString(),
+                Icons.vpn_lock,
+              ),
             ] else
               const Text('Failed to load snapshot.'),
           ],
@@ -152,17 +168,28 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _buildLiveStreamRow(String title, Stream<bool?> stream, IconData icon) {
+  Widget _buildLiveStreamRow(
+    String title,
+    Stream<bool?> stream,
+    IconData icon,
+  ) {
     return StreamBuilder<bool?>(
       stream: stream,
       builder: (context, snapshot) {
-        final value = snapshot.hasData ? snapshot.data.toString() : 'Waiting...';
+        final value = snapshot.hasData
+            ? snapshot.data.toString()
+            : 'Waiting...';
         return _buildStatusRow(title, value, icon, isLive: true);
       },
     );
   }
 
-  Widget _buildStatusRow(String label, String value, IconData icon, {bool isLive = false}) {
+  Widget _buildStatusRow(
+    String label,
+    String value,
+    IconData icon, {
+    bool isLive = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -180,7 +207,9 @@ class _MyAppState extends State<MyApp> {
             style: TextStyle(
               fontSize: 16,
               // Highlights 'true' (usually bad for security) in red, 'false' in green.
-              color: value == 'true' ? Colors.red : (value == 'false' ? Colors.green : Colors.grey),
+              color: value == 'true'
+                  ? Colors.red
+                  : (value == 'false' ? Colors.green : Colors.grey),
               fontWeight: FontWeight.w500,
             ),
           ),

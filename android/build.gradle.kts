@@ -5,7 +5,7 @@ plugins {
     id("com.android.library")
 }
 
-group = "com.etranzact.gh.device_security"
+group = "com.etranzact.gh.device_security_plus"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -14,7 +14,7 @@ repositories {
 }
 
 extensions.configure<LibraryExtension> {
-    namespace = "com.etranzact.gh.device_security"
+    namespace = "com.etranzact.gh.device_security_plus"
     compileSdk = 36
 
     compileOptions {

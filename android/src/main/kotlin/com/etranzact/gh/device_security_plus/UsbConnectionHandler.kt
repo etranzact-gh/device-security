@@ -1,4 +1,4 @@
-package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security_plus
 
 import android.content.BroadcastReceiver
 import android.content.Context

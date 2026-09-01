@@ -1,4 +1,4 @@
-import 'package:device_security/device_security_snapshot.dart';
+import 'package:device_security_plus/device_security_snapshot.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 
 import 'device_security_platform_interface.dart';

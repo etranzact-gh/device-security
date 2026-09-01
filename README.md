@@ -1,4 +1,4 @@
-# device_security
+# device_security_plus
 
 A Flutter plugin to retrieve unique device identifiers and monitor real-time security statuses across iOS and Android.
 
@@ -19,7 +19,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  device_security: ^latest_version
+  device_security_plus: ^latest_version
 ```
 
 ### iOS Setup Note
@@ -29,7 +29,7 @@ If you are testing the **Device ID** generation on an iOS Simulator, you may nee
 
 First, instantiate the plugin:
 ```dart
-import 'package:device_security/device_security.dart';
+import 'package:device_security_plus/device_security_plus.dart';
 
 final deviceSecurity = DeviceSecurity();
 ```

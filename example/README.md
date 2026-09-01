@@ -1,6 +1,6 @@
 # device_security_example
 
-Demonstrates how to use the device_security plugin.
+Demonstrates how to use the device_security_plus plugin.
 
 ## Getting Started
 

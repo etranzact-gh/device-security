@@ -1,4 +1,4 @@
-package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security_plus
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall

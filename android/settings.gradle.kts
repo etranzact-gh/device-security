@@ -15,4 +15,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "device_security"
+rootProject.name = "device_security_plus"
