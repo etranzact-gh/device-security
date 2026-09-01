@@ -8,10 +8,10 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  device_info_plus: any
+  device_info_plus: '>=11.0.0 <15.0.0'
   flutter:
     sdk: flutter
-  flutter_secure_storage: any
+  flutter_secure_storage: '>=10.2.0 <12.0.0'
   plugin_platform_interface: ^2.0.2
   uuid: ^4.6.0
 
