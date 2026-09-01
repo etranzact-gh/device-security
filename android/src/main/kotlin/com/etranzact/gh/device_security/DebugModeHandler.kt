@@ -1,4 +1,4 @@
-package package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security
 
 import android.content.Context
 import android.database.ContentObserver
@@ -17,6 +17,13 @@ class DebugModeHandler(private val context: Context) {
                 private var contentObserver: ContentObserver? = null
 
                 override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+                    // Emit initial state immediately
+                    val initialAdbEnabled = Settings.Global.getInt(
+                        context.contentResolver,
+                        Settings.Global.ADB_ENABLED, 0
+                    ) == 1
+                    events?.success(initialAdbEnabled)
+
                     contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
                         override fun onChange(selfChange: Boolean) {
                             super.onChange(selfChange)

@@ -15,10 +15,24 @@ class DeviceSecurityPlugin :
     // This local reference serves to register the plugin with the Flutter Engine and unregister it
     // when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
+    private lateinit var deviceIdHandler: DeviceIdHandler
+    private lateinit var debugModeHandler: DebugModeHandler
+    private lateinit var usbConnectionHandler: UsbConnectionHandler
+    private lateinit var vpnConnectionHandler: VpnConnectionHandler
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        deviceIdHandler = DeviceIdHandler(flutterPluginBinding.applicationContext)
+        debugModeHandler = DebugModeHandler(flutterPluginBinding.applicationContext)
+        usbConnectionHandler = UsbConnectionHandler(flutterPluginBinding.applicationContext)
+        vpnConnectionHandler = VpnConnectionHandler(flutterPluginBinding.applicationContext)
+
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "device_security")
         channel.setMethodCallHandler(this)
+
+        deviceIdHandler.setupChannel(flutterPluginBinding.flutterEngine!!)
+        debugModeHandler.setupChannel(flutterPluginBinding.flutterEngine!!)
+        usbConnectionHandler.setupChannel(flutterPluginBinding.flutterEngine!!)
+        vpnConnectionHandler.setupChannel(flutterPluginBinding.flutterEngine!!)
     }
 
     override fun onMethodCall(

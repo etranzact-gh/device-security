@@ -1,4 +1,4 @@
-package package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security
 
 import android.content.Context
 import android.media.MediaDrm

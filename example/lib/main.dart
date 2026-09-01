@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -16,7 +17,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String? _deviceId = 'Unknown';
+  Stream<bool?>? _usbConnected;
+  Stream<bool?>? _debugMode;
+  Stream<bool?>? _vpnConnected;
   final _deviceSecurityPlugin = DeviceSecurity();
 
   @override
@@ -27,14 +31,19 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
+    String deviceId;
+
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _deviceSecurityPlugin.getPlatformVersion() ?? 'Unknown platform version';
+   
+      deviceId =
+          await _deviceSecurityPlugin.getDeviceId() ?? 'Unknown Device ID';
+      _usbConnected = _deviceSecurityPlugin.getUsbConnectedStatus();
+      _debugMode = _deviceSecurityPlugin.getDebugModeStatus();
+      _vpnConnected = _deviceSecurityPlugin.getVpnConnectionStatus();
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      deviceId = 'Failed to get device ID';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -43,7 +52,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _deviceId = deviceId;
     });
   }
 
@@ -52,7 +61,41 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(child: Text('Running on: $_platformVersion\n')),
+        body: Center(
+          child: Column(
+            children: [
+           
+              Text('Device ID: $_deviceId\n'),
+              StreamBuilder<bool?>(
+                stream: _usbConnected,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text('USB Connected: ${snapshot.data}\n');
+                  }
+                  return const Text('USB Connected: Unknown\n');
+                },
+              ),
+              StreamBuilder<bool?>(
+                stream: _debugMode,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text('Debug Mode: ${snapshot.data}\n');
+                  }
+                  return const Text('Debug Mode: Unknown\n');
+                },
+              ),
+              StreamBuilder<bool?>(
+                stream: _vpnConnected,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text('VPN Connected: ${snapshot.data}\n');
+                  }
+                  return const Text('VPN Connected: Unknown\n');
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

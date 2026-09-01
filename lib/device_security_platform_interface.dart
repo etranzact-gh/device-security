@@ -23,7 +23,24 @@ abstract class DeviceSecurityPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+
+  /// Get Device Id
+  Future<String?> getDeviceId() {
+    throw UnimplementedError('getDeviceId() has not been implemented.');
+  }
+
+  /// Get VPN connection status
+  Stream<bool?> getVpnConnectionStatus() {
+    throw UnimplementedError('isVpnConnected() has not been implemented.');
+  }
+
+  /// Get Debug Mode status
+  Stream<bool?> getDebugModeStatus() {
+    throw UnimplementedError('isDebugModeOn() has not been implemented.');
+  }
+
+  /// Get USB Connected status
+  Stream<bool?> getUsbConnectedStatus() {
+    throw UnimplementedError('isUsbConnected() has not been implemented.');
   }
 }

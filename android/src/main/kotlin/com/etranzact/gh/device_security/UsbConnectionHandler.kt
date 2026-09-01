@@ -1,4 +1,4 @@
-package package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -23,7 +23,15 @@ class UsbConnectionHandler(private val context: Context) {
                         }
                     }
                     val filter = IntentFilter("android.hardware.usb.action.USB_STATE")
-                    context.registerReceiver(receiver, filter)
+                    val intent = context.registerReceiver(receiver, filter)
+                    // Intent could be null if no sticky broadcast is found
+                    if (intent != null) {
+                        val connected = intent.extras?.getBoolean("connected") ?: false
+                        events?.success(connected)
+                    } else {
+                        // Fallback initial state if sticky broadcast isn't found
+                        events?.success(false)
+                    }
                 }
 
                 override fun onCancel(arguments: Any?) {

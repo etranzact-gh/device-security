@@ -1,4 +1,4 @@
-package package com.etranzact.gh.device_security
+package com.etranzact.gh.device_security
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -7,7 +7,6 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Handler
 import android.os.Looper
-import com.pichillilorenzo.flutter_inappwebview_android.Util.log
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 
