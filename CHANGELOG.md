@@ -1,3 +1,7 @@
+## 1.0.3
+
+* **Fix (iOS)**: Renamed `.podspec` file to match the new `device_security_plus` package name and corrected the internal source paths to resolve `No podspec found` errors during `pod install`.
+
 ## 1.0.2
 
 * **Refactor**: Moved internal implementation files (`device_security_method_channel.dart` and `device_security_platform_interface.dart`) into the `lib/src/` directory to hide them from the public API surface.
