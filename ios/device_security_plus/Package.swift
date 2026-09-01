@@ -6,10 +6,10 @@ import PackageDescription
 let package = Package(
     name: "device_security_plus",
     platforms: [
-        .iOS("15.0")
+        .iOS("14.0")
     ],
     products: [
-        .library(name: "device-security", targets: ["device_security_plus"])
+        .library(name: "device_security_plus", targets: ["device_security_plus"])
     ],
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework")

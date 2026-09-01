@@ -13,9 +13,9 @@ A Flutter plugin to retrieve unique device identifiers and monitor real-time sec
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'eTranzact' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files     = 'device_security/Sources/device_security/**/*'
+  s.source_files     = 'device_security_plus/Sources/device_security_plus/**/*'
   s.dependency 'Flutter'
-  s.platform         = :ios, '12.0'
+  s.platform         = :ios, '14.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

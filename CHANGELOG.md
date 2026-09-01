@@ -1,3 +1,7 @@
+## 1.0.4
+
+* **Enhancement (iOS)**: Updated minimum iOS deployment target to 14.0 in `.podspec` and `Package.swift` to ensure better compatibility with modern iOS projects.
+
 ## 1.0.3
 
 * **Fix (iOS)**: Renamed `.podspec` file to match the new `device_security_plus` package name and corrected the internal source paths to resolve `No podspec found` errors during `pod install`.
