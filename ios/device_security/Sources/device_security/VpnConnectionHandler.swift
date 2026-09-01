@@ -4,11 +4,12 @@ import Foundation
 
 class VpnConnectionHandler: NSObject, FlutterStreamHandler {
     private var eventSink: FlutterEventSink?
-    private let monitor = NWPathMonitor()
+    private var monitor: NWPathMonitor?
     private let queue = DispatchQueue(label: "VpnMonitorQueue")
     
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         self.eventSink = events
+        self.monitor = NWPathMonitor()
         
         // Push initial state immediately
         DispatchQueue.main.async {
@@ -16,20 +17,21 @@ class VpnConnectionHandler: NSObject, FlutterStreamHandler {
         }
         
         // Listen to all network path changes
-        monitor.pathUpdateHandler = { [weak self] path in
+        monitor?.pathUpdateHandler = { [weak self] path in
             guard let self = self else { return }
             let isVpn = self.checkVpnStatus()
             DispatchQueue.main.async {
                 self.eventSink?(isVpn)
             }
         }
-        monitor.start(queue: queue)
+        monitor?.start(queue: queue)
         
         return nil
     }
     
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        monitor.cancel()
+        monitor?.cancel()
+        monitor = nil
         eventSink = nil
         return nil
     }
