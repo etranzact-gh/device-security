@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
   late final Stream<bool?> _usbStream;
   late final Stream<bool?> _debugStream;
   late final Stream<bool?> _vpnStream;
+  late final Stream<Map<SecurityStatus, bool>> _combinedStream;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     _usbStream = _deviceSecurityPlugin.getUsbConnectedStatus();
     _debugStream = _deviceSecurityPlugin.getDebugModeStatus();
     _vpnStream = _deviceSecurityPlugin.getVpnConnectionStatus();
+    _combinedStream = _deviceSecurityPlugin.getSecurityStatusStream();
 
     // 2. Fetch initial snapshot
     _fetchSnapshot();
@@ -74,6 +76,8 @@ class _MyAppState extends State<MyApp> {
               _buildSnapshotCard(),
               const SizedBox(height: 24),
               _buildLiveMonitoringCard(),
+              const SizedBox(height: 24),
+              _buildCombinedStreamCard(),
             ],
           ),
         ),
@@ -162,6 +166,63 @@ class _MyAppState extends State<MyApp> {
             _buildLiveStreamRow('USB Connected', _usbStream, Icons.usb),
             _buildLiveStreamRow('Debug Mode', _debugStream, Icons.bug_report),
             _buildLiveStreamRow('VPN Connected', _vpnStream, Icons.vpn_lock),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCombinedStreamCard() {
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '3. Combined Live Monitoring',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const Text(
+              'A single stream returning a map of all security statuses.',
+              style: TextStyle(color: Colors.grey),
+            ),
+            const Divider(),
+            StreamBuilder<Map<SecurityStatus, bool>>(
+              stream: _combinedStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final statuses = snapshot.data!;
+                return Column(
+                  children: [
+                    _buildStatusRow(
+                      'USB Connected',
+                      statuses[SecurityStatus.usbConnection].toString(),
+                      Icons.usb,
+                      isLive: true,
+                    ),
+                    _buildStatusRow(
+                      'Debug Mode',
+                      statuses[SecurityStatus.debugMode].toString(),
+                      Icons.bug_report,
+                      isLive: true,
+                    ),
+                    _buildStatusRow(
+                      'VPN Connected',
+                      statuses[SecurityStatus.vpnConnection].toString(),
+                      Icons.vpn_lock,
+                      isLive: true,
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),

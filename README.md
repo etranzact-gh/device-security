@@ -75,6 +75,25 @@ deviceSecurity.getDebugModeStatus().listen((isDebug) {
     print("Debugger attached!");
   }
 });
+
+// Monitor All Statuses with an Enum (Recommended)
+StreamBuilder<Map<SecurityStatus, bool>>(
+  stream: deviceSecurity.getSecurityStatusStream(),
+  builder: (context, snapshot) {
+    if (snapshot.hasData) {
+      final statuses = snapshot.data!;
+      if (statuses[SecurityStatus.vpnConnection] == true) {
+        return Text('Warning: VPN is currently active!');
+      } else if (statuses[SecurityStatus.debugMode] == true) {
+        return Text('Warning: Debug mode active!');
+      } else if (statuses[SecurityStatus.usbConnection] == true) {
+        return Text('Warning: USB connected!');
+      }
+      return Text('Connection is secure.');
+    }
+    return CircularProgressIndicator();
+  },
+);
 ```
 
 ## Platform Specific Limitations

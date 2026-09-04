@@ -4,7 +4,7 @@ version: 1.0.5
 homepage: https://github.com/etranzact-gh/device-security
 
 environment:
-  sdk: ^3.13.0
+  sdk: ^3.11.0
   flutter: '>=3.3.0'
 
 dependencies:
