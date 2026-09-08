@@ -14,6 +14,7 @@ A Flutter plugin to retrieve unique device identifiers and monitor real-time sec
   s.author           = { 'eTranzact' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files     = 'device_security_plus/Sources/device_security_plus/**/*'
+  s.resource_bundles = {'device_security_plus_privacy' => ['device_security_plus/Sources/device_security_plus/PrivacyInfo.xcprivacy']}
   s.dependency 'Flutter'
   s.platform         = :ios, '14.0'
 
