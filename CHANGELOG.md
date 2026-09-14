@@ -1,3 +1,8 @@
+## 1.0.7
+
+* Added stream that emits a map of all security statuses from a single function.
+* Downgraded Flutter SDK version requirement to 3.11.0.
+
 ## 1.0.4
 
 * **Enhancement (iOS)**: Updated minimum iOS deployment target to 14.0 in `.podspec` and `Package.swift` to ensure better compatibility with modern iOS projects.
