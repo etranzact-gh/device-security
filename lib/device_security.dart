@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:device_security_plus/device_security_snapshot.dart';
+import 'package:device_security_plus/security_status.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
+
+export 'package:device_security_plus/security_status.dart';
 
 import 'src/device_security_platform_interface.dart';
 
@@ -88,5 +93,54 @@ class DeviceSecurity {
       isDebugMode: (results[2] as bool?) ?? false,
       isVpnConnected: (results[3] as bool?) ?? false,
     );
+  }
+
+  /// A stream that emits a map of all security statuses.
+  ///
+  /// This combines the statuses of VPN, Debug Mode, and USB Connection into a
+  /// single stream. It emits a new map whenever any of the individual statuses change.
+  /// The map contains the boolean value for each [SecurityStatus].
+  Stream<Map<SecurityStatus, bool>> getSecurityStatusStream() {
+    late StreamController<Map<SecurityStatus, bool>> controller;
+    bool isVpn = false;
+    bool isDebug = false;
+    bool isUsb = false;
+
+    StreamSubscription<bool?>? vpnSub;
+    StreamSubscription<bool?>? debugSub;
+    StreamSubscription<bool?>? usbSub;
+
+    void emit() {
+      if (controller.isClosed) return;
+      controller.add({
+        SecurityStatus.vpnConnection: isVpn,
+        SecurityStatus.debugMode: isDebug,
+        SecurityStatus.usbConnection: isUsb,
+      });
+    }
+
+    controller = StreamController<Map<SecurityStatus, bool>>.broadcast(
+      onListen: () {
+        vpnSub = getVpnConnectionStatus().listen((status) {
+          isVpn = status ?? false;
+          emit();
+        });
+        debugSub = getDebugModeStatus().listen((status) {
+          isDebug = status ?? false;
+          emit();
+        });
+        usbSub = getUsbConnectedStatus().listen((status) {
+          isUsb = status ?? false;
+          emit();
+        });
+      },
+      onCancel: () {
+        vpnSub?.cancel();
+        debugSub?.cancel();
+        usbSub?.cancel();
+      },
+    );
+
+    return controller.stream;
   }
 }
